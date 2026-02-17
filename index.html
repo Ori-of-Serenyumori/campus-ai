@@ -5,127 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>校园社团海报设计AI助手</title>
     <style>
-        * {margin:0;padding:0;box-sizing:border-box;font-family:"微软雅黑","PingFang SC",sans-serif;}
-        body {background:#f5f7fa;padding:20px;}
-        .container {max-width:900px;margin:0 auto;background:white;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.08);padding:24px;}
-        .header {text-align:center;margin-bottom:20px;}
-        .header h1 {color:#667eea;margin-bottom:8px;font-size:28px;}
-        .header p {color:#666;font-size:16px;}
-        .input-area {margin:20px 0;}
-        .input-area label {display:block;margin-bottom:8px;color:#333;font-weight:600;}
-        .input-area input, .input-area select, .input-area textarea {width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin-bottom:12px;font-size:16px;}
-        .input-area textarea {height:120px;resize:none;}
-        button {width:100%;padding:14px;background:#667eea;color:white;border:none;border-radius:8px;font-size:18px;cursor:pointer;transition:background 0.3s;}
-        button:hover {background:#5a6edb;}
-        .result {margin-top:20px;padding:20px;background:#f9f9f9;border-radius:8px;min-height:200px;white-space:pre-wrap;font-size:16px;line-height:1.8;color:#333;}
-        .loading {color:#999;text-align:center;padding:40px;}
-        @media (max-width:768px) {.header h1 {font-size:22px;}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .intro {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .intro h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .intro ul {
+            color: #666;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+        .chat-wrapper {
+            position: relative;
+            width: 100%;
+            height: 700px;
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #666;
+            font-size: 18px;
+            text-align: center;
+        }
+        .chat-box {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 22px;
+            }
+            .chat-wrapper {
+                height: 500px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎨 校园社团海报设计助手</h1>
+            <h1>🎨 校园社团海报设计AI助手</h1>
             <p>1分钟搞定招新/活动海报，0基础也能做专业设计</p>
         </div>
-
-        <div class="input-area">
-            <label>1. 社团类型</label>
-            <select id="clubType">
-                <option value="体育类（羽毛球/篮球/跑步）">体育类（羽毛球/篮球/跑步）</option>
-                <option value="文艺类（话剧/音乐/绘画）">文艺类（话剧/音乐/绘画）</option>
-                <option value="学术类（辩论/编程/考研）">学术类（辩论/编程/考研）</option>
-                <option value="公益类（志愿者/环保）">公益类（志愿者/环保）</option>
-                <option value="其他">其他</option>
-            </select>
-
-            <label>2. 海报用途</label>
-            <select id="useCase">
-                <option value="招新">招新</option>
-                <option value="活动宣传（比赛/演出/讲座）">活动宣传（比赛/演出/讲座）</option>
-                <option value="周年庆/成果展示">周年庆/成果展示</option>
-                <option value="其他">其他</option>
-            </select>
-
-            <label>3. 核心卖点/特殊要求（如：零基础可加、主色调橙色、A3尺寸）</label>
-            <textarea id="requirements" placeholder="比如：零基础可加，每周训练，主色调橙色，突出奖品丰厚"></textarea>
-
-            <button onclick="generatePoster()">生成海报方案</button>
+        
+        <div class="intro">
+            <h3>✨ 核心功能</h3>
+            <ul>
+                <li>招新海报/活动海报/赛事海报一键生成</li>
+                <li>自动输出海报文案+配色+排版+素材链接</li>
+                <li>支持体育/文艺/学术/公益等所有社团类型</li>
+                <li>生成的内容可直接用于打印/线上宣传</li>
+            </ul>
         </div>
-
-        <div id="result" class="result">👇 点击上方按钮，生成专属海报方案</div>
+        
+        <div class="chat-wrapper">
+            <div id="loading">🎨 海报助手加载中...请稍等</div>
+            <iframe class="chat-box" src="https://www.coze.cn/app/7607768336768139290" onload="document.getElementById('loading').style.display='none'"></iframe>
+        </div>
     </div>
-
-    <script>
-        // 预设校园海报模板库，覆盖所有社团类型
-        const templates = [
-            `【{club}】{use}海报方案
-✨ 海报标题：{club}{use}啦！加入我们，解锁精彩大学生活
-📝 核心文案：{requirement}
-🎨 配色方案：{color}
-📐 推荐尺寸：{size}
-🖼️ 排版布局：标题居上（粗体大号字），核心卖点居中，报名方式居下
-📎 素材建议：免费可商用素材网站：Canva校园版、创客贴、Pixabay
-💡 小技巧：添加社团LOGO，用校园风景做背景，突出青春活力`,
-            
-            `【{club}】{use}专属海报
-🔥 主标题：{club}，因热爱而相聚 | {use}
-💬 副标题：{requirement}
-🎨 配色：{color}（校园风高饱和配色，吸引学生注意力）
-📏 尺寸：{size}（适合校园张贴/朋友圈转发）
-📸 配图建议：社团活动实拍图/成员合照/趣味插画
-📜 文案小贴士：语言简洁有网感，加入emoji增加活泼感`,
-            
-            `{club}{use}海报设计指南
-✅ 标题：{club}{use}，等你来！
-✅ 核心信息：{requirement}
-✅ 配色：{color}
-✅ 尺寸：{size}
-✅ 必加元素：报名二维码/联系方式/活动时间地点
-✅ 字体推荐：思源黑体（免费商用）、站酷快乐体（校园风）`
-        ];
-
-        // 配色匹配（按社团类型自动推荐）
-        const colorMap = {
-            "体育类（羽毛球/篮球/跑步）": "橙色+白色（活力）/蓝色+灰色（专业）",
-            "文艺类（话剧/音乐/绘画）": "紫色+米色（文艺）/粉色+白色（温柔）",
-            "学术类（辩论/编程/考研）": "深蓝色+浅灰（专业）/绿色+白色（沉稳）",
-            "公益类（志愿者/环保）": "绿色+白色（清新）/黄色+蓝色（温暖）",
-            "其他": "红色+白色（醒目）/渐变色（潮流）"
-        };
-
-        // 尺寸匹配
-        const sizeMap = {
-            "招新": "A3（张贴）/9:16（朋友圈）",
-            "活动宣传（比赛/演出/讲座）": "A4（宣传单）/16:9（公众号头图）",
-            "周年庆/成果展示": "A2（易拉宝）/1:1（小红书）",
-            "其他": "A3（通用）/9:16（手机端）"
-        };
-
-        function generatePoster() {
-            const club = document.getElementById("clubType").value;
-            const use = document.getElementById("useCase").value;
-            const requirement = document.getElementById("requirements").value || "无特殊要求，突出社团特色即可";
-            const result = document.getElementById("result");
-
-            // 加载提示
-            result.className = "result loading";
-            result.innerText = "🎨 正在生成海报方案...";
-
-            // 随机选模板，填充内容
-            setTimeout(() => {
-                const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-                const final = randomTemplate
-                    .replace(/{club}/g, club)
-                    .replace(/{use}/g, use)
-                    .replace(/{requirement}/g, requirement)
-                    .replace(/{color}/g, colorMap[club])
-                    .replace(/{size}/g, sizeMap[use]);
-                
-                result.className = "result";
-                result.innerText = final;
-            }, 800);
-        }
-    </script>
 </body>
 </html>
